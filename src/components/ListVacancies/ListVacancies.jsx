@@ -7,7 +7,7 @@ const ListVacancies = ({ list, isLoading }) => {
       {isLoading && <Loader />}
 
       {list ? (
-        list.map((item) => <VacancyItem k={item} key={item.id} />)
+        list.map((item) => <VacancyItem item={item} key={item.id} />)
       ) : (
         <Box>Вакансий не найдено</Box>
       )}

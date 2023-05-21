@@ -8,25 +8,29 @@ import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useStyles } from './style';
 
-export const VacancyItem = ({ k }) => {
+export const VacancyItem = ({ item }) => {
   const { classes } = useStyles();
   const [isFavorit, setIsFavorit] = useState(false);
-  console.log(k);
 
   let template = '';
-  if (k.payment_from && k.payment_to) {
-    template += `з/п ${k.payment_from} - ${k.payment_to} ${k.currency}`;
-  } else if (k.payment_from === k.payment_to) {
-    template += `з/п ${k.payment_from}  ${k.currency}`;
+  if (item.payment_from && item.payment_to) {
+    template += `з/п ${item.payment_from} - ${item.payment_to} ${item.currency}`;
+  } else if (item.payment_from === item.payment_to) {
+    template += `з/п ${item.payment_from}  ${item.currency}`;
   }
 
   const handleFavoriteClick = () => {
     setIsFavorit(!isFavorit);
   };
   return (
-    <Card className={classes.card} padding={24}>
+    <Card
+      className={classes.card}
+      padding={24}
+      data-elem={`vacancy-${item.id}`}
+    >
       <ActionIcon
         onClick={handleFavoriteClick}
+        data-elem={`vacancy-${item.id}`}
         sx={{
           position: 'absolute',
           top: 25,
@@ -36,20 +40,26 @@ export const VacancyItem = ({ k }) => {
         {isFavorit ? <StarFavoriteIcon /> : <StarIcon />}
       </ActionIcon>
       <Title order={3}>
-        <Box component={NavLink} to={`./${k.id}`} className={classes.cardLink}>
-          {k.profession}
+        <Box
+          component={NavLink}
+          to={`/vacancy/${item.id}`}
+          className={classes.cardLink}
+        >
+          {item.profession}
         </Box>
       </Title>
       <Group>
         <Text className={classes.salary}>{template}</Text>
         <List center icon={<DotIcon />}>
-          <List.Item className={classes.list}>{k.type_of_work.title}</List.Item>
+          <List.Item className={classes.list}>
+            {item.type_of_work.title}
+          </List.Item>
         </List>
       </Group>
       <Text>
         <Group spacing={8}>
           <LocationIcon />
-          <Text className={classes.text}>{k.town.title}</Text>
+          <Text className={classes.text}>{item.town.title}</Text>
         </Group>
       </Text>
     </Card>

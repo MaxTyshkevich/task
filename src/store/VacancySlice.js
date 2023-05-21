@@ -1,12 +1,28 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getVacancies, getVacancy } from '../api/index.js';
+import {
+  getVacancies,
+  getVacancy,
+  getFavoriteVacancies,
+} from '../api/index.js';
 
 export const fetchVacancies = createAsyncThunk(
   'vacancies/fetchVacancies',
-  async function ({ keyword } = { keyword: '' }, { rejectWithValue }) {
-    console.log(`params при запросе `, { keyword });
+  async function (search, { rejectWithValue }) {
     try {
-      const data = await getVacancies();
+      const data = await getVacancies(search);
+
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const fetchFavoriteVacancies = createAsyncThunk(
+  'vacancies/fetchFavoriteVacancies',
+  async function (search, { rejectWithValue }) {
+    try {
+      const data = await getFavoriteVacancies(search);
 
       return data;
     } catch (error) {
@@ -74,6 +90,22 @@ const vacanciesSlice = createSlice({
     [fetchVacancy.rejected]: (state, action) => {
       state.isLoading = false;
       state.vacancy = null;
+      state.error = action.payload;
+    },
+
+    [fetchFavoriteVacancies.pending]: (state) => {
+      state.isLoading = true;
+      state.error = null;
+    },
+    [fetchFavoriteVacancies.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.favoriteList = action.payload.objects;
+      state.isNextPage = action.payload.more;
+      state.countPages = Math.ceil(action.payload.total / 3);
+    },
+    [fetchFavoriteVacancies.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.favoriteList = [];
       state.error = action.payload;
     },
   },

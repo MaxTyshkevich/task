@@ -35,12 +35,15 @@ export const getToken = async () => {
   return res.data;
 };
 
-export const getVacancies = async () => {
-  const res = await instance.get(`/2.0/vacancies/`, {
-    params: {
-      count: 3,
-    },
-  });
+export const getVacancies = async (search) => {
+  let path = `/2.0/vacancies`;
+  if (search) {
+    path += search + `&count=3`;
+  } else {
+    path += `?count=3`;
+  }
+
+  const res = await instance.get(path);
   console.log({ res });
   return res.data;
 };
@@ -54,5 +57,18 @@ export const getVacancy = async (id) => {
 export const getCategories = async () => {
   const res = await instance.get(`/2.0/catalogues/`);
 
+  return res.data;
+};
+
+export const getFavoriteVacancies = async (search) => {
+  let path = `/2.0/favorites`;
+  if (search) {
+    path += search + `&count=3`;
+  } else {
+    path += `?count=3`;
+  }
+
+  const res = await instance.get(path);
+  console.log({ res });
   return res.data;
 };

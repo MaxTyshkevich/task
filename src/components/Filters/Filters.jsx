@@ -9,9 +9,10 @@ import {
 } from '@mantine/core';
 import { ReactComponent as CloseIcon } from '../../icons/close.svg';
 import { useSelector } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { fetchCategories } from '../../store/filterSlice';
+
 import { useDispatch } from 'react-redux';
 import { useStyles } from './style';
 import {
@@ -21,10 +22,11 @@ import {
   resetFilter,
 } from '../../store/filterSlice.js';
 import { ReactComponent as ArrayDown } from '../../icons/ArrayDown.svg';
-import { fetchVacancies } from '../../store/VacancySlice';
+
 export const Filters = () => {
   const { classes } = useStyles();
   let [searchParams, setSearchParams] = useSearchParams();
+  let { search } = useLocation();
 
   const dispatch = useDispatch();
   const { categories, select, maxSalary, minSalary, selectCategories } =
@@ -36,14 +38,13 @@ export const Filters = () => {
 
   const handleSumbit = (event) => {
     event.preventDefault();
-
-    dispatch(
-      fetchVacancies({
-        keyword: select,
-        payment_from: minSalary,
-        payment_to: maxSalary,
-      })
-    );
+    console.log(searchParams.entries());
+    setSearchParams({
+      ...searchParams,
+      catalogues: selectCategories,
+      payment_from: minSalary,
+      payment_to: maxSalary,
+    });
   };
 
   return (
@@ -62,7 +63,7 @@ export const Filters = () => {
           </Button>
         </Group>
         <Select
-          /* initiallyOpened={true}*/
+          data-elem="industry-select"
           value={selectCategories}
           onChange={(value) => dispatch(changeSelect(value))}
           className={classes.select}
@@ -81,6 +82,7 @@ export const Filters = () => {
         />
         <Group className={classes.groupNumberInput} mt={20} spacing={8}>
           <NumberInput
+            data-elem="salary-from-input"
             className={classes.numberInput}
             defaultValue={0}
             styles={{
@@ -102,6 +104,7 @@ export const Filters = () => {
             }
           />
           <NumberInput
+            data-elem="salary-to-input"
             className={classes.numberInput}
             defaultValue={0}
             value={maxSalary}

@@ -60,6 +60,7 @@ const filerSlice = createSlice({
     },
     [fetchCategories.rejected]: (state, action) => {
       state.isLoading = false;
+      state.categories = [];
       state.error = action.payload;
     },
   },
