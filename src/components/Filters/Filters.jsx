@@ -84,7 +84,7 @@ export const Filters = () => {
           <NumberInput
             data-elem="salary-from-input"
             className={classes.numberInput}
-            defaultValue={0}
+            min={0}
             styles={{
               input: {
                 height: em(48),
@@ -106,7 +106,7 @@ export const Filters = () => {
           <NumberInput
             data-elem="salary-to-input"
             className={classes.numberInput}
-            defaultValue={0}
+            min={0}
             value={maxSalary}
             onChange={(value) => dispatch(changechangeMaxSalary(value))}
             placeholder="До"
