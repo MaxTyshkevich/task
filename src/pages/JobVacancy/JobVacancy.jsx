@@ -9,10 +9,11 @@ import { useStyles } from './style';
 
 export const JobVacancy = () => {
   let { vacancyId } = useParams();
+  const { vacancy } = useSelector((state) => state.vac);
 
+  console.log(vacancyId);
   const dispatch = useDispatch();
   const { classes } = useStyles();
-  const { vacancy } = useSelector((state) => state.vac);
 
   useEffect(() => {
     dispatch(fetchVacancy(vacancyId));
@@ -21,7 +22,7 @@ export const JobVacancy = () => {
   return (
     <Container size="xl" sx={{ paddingTop: '40px' }}>
       <Flex sx={{ flexDirection: 'column', gap: '20px' }}>
-        {vacancy && <VacancyItem k={vacancy} />}
+        {vacancy && <VacancyItem item={vacancy} />}
         <TypographyStylesProvider>
           <Card className={classes.card}>
             {vacancy && (

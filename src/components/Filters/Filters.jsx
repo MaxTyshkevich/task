@@ -26,11 +26,11 @@ import { ReactComponent as ArrayDown } from '../../icons/ArrayDown.svg';
 export const Filters = () => {
   const { classes } = useStyles();
   let [searchParams, setSearchParams] = useSearchParams();
-  let { search } = useLocation();
 
   const dispatch = useDispatch();
-  const { categories, select, maxSalary, minSalary, selectCategories } =
-    useSelector((state) => state.filters);
+  const { categories, maxSalary, minSalary, selectCategories } = useSelector(
+    (state) => state.filters
+  );
 
   useEffect(() => {
     dispatch(fetchCategories());
@@ -38,9 +38,13 @@ export const Filters = () => {
 
   const handleSumbit = (event) => {
     event.preventDefault();
-    console.log(searchParams.entries());
+    let objParams = {};
+    for (const [key, value] of searchParams.entries()) {
+      objParams[key] = value;
+    }
+
     setSearchParams({
-      ...searchParams,
+      ...objParams,
       catalogues: selectCategories,
       payment_from: minSalary,
       payment_to: maxSalary,

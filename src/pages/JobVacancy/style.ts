@@ -10,7 +10,7 @@ export const useStyles = createStyles((theme) => ({
   vacancyRichText: {
     padding: em(24),
     flexDirection: 'column',
-    'ul + p , p:nth-child(3)': {
+    'ul + p , p:nth-of-type(3)': {
       color: '#232134',
       fontWeight: 700,
       fontSize: em(20),

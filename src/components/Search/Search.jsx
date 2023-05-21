@@ -1,5 +1,5 @@
 import { Button, TextInput } from '@mantine/core';
-import { useSearchParams, useLocation } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { IconSearch } from '@tabler/icons-react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
@@ -9,13 +9,16 @@ export const Search = () => {
   let [searchParams, setSearchParams] = useSearchParams();
   const searchInput = searchParams.get('keyword');
   const dispatch = useDispatch();
-  const { categories, select, maxSalary, minSalary } = useSelector(
-    (state) => state.filters
-  );
+  const { select } = useSelector((state) => state.filters);
 
   const HandleFind = () => {
+    let objParams = {};
+    for (const [key, value] of searchParams.entries()) {
+      objParams[key] = value;
+    }
+
     setSearchParams({
-      ...searchParams,
+      ...objParams,
       keyword: select,
     });
   };

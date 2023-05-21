@@ -7,8 +7,6 @@ import { useDispatch } from 'react-redux';
 import { fetchAuthorization } from '../store/authSlice.js';
 
 export const Layout = () => {
-  /* const theme = useMantineTheme();
-  console.log({ theme }); */
   const dispatch = useDispatch();
 
   useEffect(() => {

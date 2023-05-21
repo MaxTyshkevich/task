@@ -11,7 +11,7 @@ import { useStyles } from './style';
 export const VacancyItem = ({ item }) => {
   const { classes } = useStyles();
   const [isFavorit, setIsFavorit] = useState(false);
-  console.log(`profession`, item.profession);
+
   let template = '';
   if (item.payment_from && item.payment_to) {
     template += `з/п ${item.payment_from} - ${item.payment_to} ${item.currency}`;

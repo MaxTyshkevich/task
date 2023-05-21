@@ -36,9 +36,17 @@ export const JobSearch = () => {
             value={page}
             sx={{ marginTop: 20 }}
             position="center"
-            onChange={(currentPage) =>
-              setSearchParams({ ...searchParams, page: currentPage })
-            }
+            onChange={(currentPage) => {
+              let objParams = {};
+              for (const [key, value] of searchParams.entries()) {
+                objParams[key] = value;
+              }
+
+              setSearchParams({
+                ...objParams,
+                page: currentPage,
+              });
+            }}
           />
         </Flex>
       </Flex>
