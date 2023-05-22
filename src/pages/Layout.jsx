@@ -17,8 +17,8 @@ export const Layout = () => {
     <>
       <HeaderSimple
         links={[
-          { link: '/job', label: 'Поиск Вакансий' },
-          { link: '/job/favorites', label: 'Избранное' },
+          { link: '/', label: 'Поиск Вакансий' },
+          { link: '/favorites', label: 'Избранное' },
         ]}
       />
       <Box
