@@ -2,7 +2,7 @@
   "name": "task",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://MaxTyshkevich.github.io/job",
+  "homepage": "https://MaxTyshkevich.github.io/task",
   "type": "module",
   "dependencies": {
     "@emotion/react": "^11.11.0",
