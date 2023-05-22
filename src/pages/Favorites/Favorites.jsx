@@ -28,7 +28,7 @@ export const Favorites = () => {
         )
       );
     } else {
-      navigate('./emptystate');
+      navigate('/job/emptystate');
     }
   }, [dispatch, favoriteList, search]);
 

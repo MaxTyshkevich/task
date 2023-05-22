@@ -6,7 +6,7 @@ import { useStyles } from './style';
 export const Logo = () => {
   const { classes } = useStyles();
   return (
-    <Text className={classes.logo} component={Link} to="/">
+    <Text className={classes.logo} component={Link} to="/job">
       <LogoIcon />
       <Title className={classes.logoText}>Jobored</Title>
     </Text>

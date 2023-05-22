@@ -7,9 +7,8 @@ import { Favorites } from '../pages/Favorites/Favorites';
 
 export const router = createBrowserRouter([
   {
-    path: '/',
+    path: 'job',
     element: <Layout />,
-    errorElement: <EmptyState />,
     children: [
       { element: <JobSearch />, index: true },
       { path: 'vacancy/:vacancyId', element: <JobVacancy /> },
