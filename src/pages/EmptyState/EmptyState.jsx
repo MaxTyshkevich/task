@@ -13,7 +13,7 @@ export const EmptyState = () => {
       <Center className={classes.center} mx="auto">
         <ErrorImage />
         <Text className={classes.text}>Упс, здесь еще ничего нет!</Text>
-        <Button component={Link} to="/job" className={classes.button}>
+        <Button component={Link} to="/" className={classes.button}>
           Поиск Вакансий
         </Button>
       </Center>
