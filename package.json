@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "homepage": "https://maxtyshkevich.github.io/task/",
   "dependencies": {
     "@emotion/react": "^11.11.0",
     "@fontsource/inter": "^4.5.15",
