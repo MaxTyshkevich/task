@@ -14,6 +14,7 @@ export const router = createBrowserRouter([
       { element: <JobSearch />, index: true },
       { path: 'vacancy/:vacancyId', element: <JobVacancy /> },
       { path: 'favorites', element: <Favorites /> },
+      { path: 'emptystate', element: <EmptyState /> },
     ],
   },
 ]);

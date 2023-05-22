@@ -8,9 +8,13 @@ import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useStyles } from './style';
 
-export const VacancyItem = ({ item }) => {
+export const VacancyItem = ({
+  item,
+  isFavorite,
+  addToFavorite,
+  delFromFavorite,
+}) => {
   const { classes } = useStyles();
-  const [isFavorit, setIsFavorit] = useState(false);
 
   let template = '';
   if (item.payment_from && item.payment_to) {
@@ -19,9 +23,6 @@ export const VacancyItem = ({ item }) => {
     template += `з/п ${item.payment_from}  ${item.currency}`;
   }
 
-  const handleFavoriteClick = () => {
-    setIsFavorit(!isFavorit);
-  };
   return (
     <Card
       className={classes.card}
@@ -29,7 +30,6 @@ export const VacancyItem = ({ item }) => {
       data-elem={`vacancy-${item.id}`}
     >
       <ActionIcon
-        onClick={handleFavoriteClick}
         data-elem={`vacancy-${item.id}`}
         sx={{
           position: 'absolute',
@@ -37,7 +37,11 @@ export const VacancyItem = ({ item }) => {
           right: 25,
         }}
       >
-        {isFavorit ? <StarFavoriteIcon /> : <StarIcon />}
+        {isFavorite ? (
+          <StarFavoriteIcon onClick={() => delFromFavorite(item.id)} />
+        ) : (
+          <StarIcon onClick={() => addToFavorite(item.id)} />
+        )}
       </ActionIcon>
       <Title order={3}>
         <Box

@@ -19,6 +19,7 @@ export const Search = () => {
 
     setSearchParams({
       ...objParams,
+      page: 1,
       keyword: select,
     });
   };

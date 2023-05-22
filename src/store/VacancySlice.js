@@ -18,19 +18,6 @@ export const fetchVacancies = createAsyncThunk(
   }
 );
 
-export const fetchFavoriteVacancies = createAsyncThunk(
-  'vacancies/fetchFavoriteVacancies',
-  async function (search, { rejectWithValue }) {
-    try {
-      const data = await getFavoriteVacancies(search);
-
-      return data;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
 export const fetchVacancy = createAsyncThunk(
   'vacancies/fetchVacancy',
   async function (id, { rejectWithValue }) {
@@ -69,7 +56,7 @@ const vacanciesSlice = createSlice({
       state.isLoading = false;
       state.vacancies = action.payload.objects;
       state.isNextPage = action.payload.more;
-      state.countPages = Math.ceil(action.payload.total / 3);
+      state.countPages = Math.ceil(action.payload.total / 4);
     },
     [fetchVacancies.rejected]: (state, action) => {
       state.isLoading = false;
@@ -90,22 +77,6 @@ const vacanciesSlice = createSlice({
     [fetchVacancy.rejected]: (state, action) => {
       state.isLoading = false;
       state.vacancy = null;
-      state.error = action.payload;
-    },
-
-    [fetchFavoriteVacancies.pending]: (state) => {
-      state.isLoading = true;
-      state.error = null;
-    },
-    [fetchFavoriteVacancies.fulfilled]: (state, action) => {
-      state.isLoading = false;
-      state.favoriteList = action.payload.objects;
-      state.isNextPage = action.payload.more;
-      state.countPages = Math.ceil(action.payload.total / 3);
-    },
-    [fetchFavoriteVacancies.rejected]: (state, action) => {
-      state.isLoading = false;
-      state.favoriteList = [];
       state.error = action.payload;
     },
   },

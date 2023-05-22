@@ -22,25 +22,27 @@ export const getToken = async () => {
     },
   });
 
-  instance.interceptors.request.use(function (config) {
-    const { accessToken } = store.getState().auth;
-
-    config.headers.Authorization = `Bearer ${accessToken}`;
-    config.headers['X-Api-App-Id'] =
-      process.env.REACT_APP_AUTH_USER_CLIENT_SECRET;
-
-    return config;
-  });
-
   return res.data;
 };
+
+instance.interceptors.request.use(function (config) {
+  const { accessToken } = store.getState().auth;
+  if (accessToken) {
+    config.headers.Authorization = `Bearer ${accessToken}`;
+  }
+
+  config.headers['X-Api-App-Id'] =
+    process.env.REACT_APP_AUTH_USER_CLIENT_SECRET;
+
+  return config;
+});
 
 export const getVacancies = async (search) => {
   let path = `/2.0/vacancies`;
   if (search) {
-    path += search + `&count=3`;
+    path += search + `&count=4&published=1`;
   } else {
-    path += `?count=3`;
+    path += `?count=4&published=1`;
   }
 
   const res = await instance.get(path);
@@ -57,18 +59,5 @@ export const getVacancy = async (id) => {
 export const getCategories = async () => {
   const res = await instance.get(`/2.0/catalogues/`);
 
-  return res.data;
-};
-
-export const getFavoriteVacancies = async (search) => {
-  let path = `/2.0/favorites`;
-  if (search) {
-    path += search + `&count=3`;
-  } else {
-    path += `?count=3`;
-  }
-
-  const res = await instance.get(path);
-  console.log({ res });
   return res.data;
 };

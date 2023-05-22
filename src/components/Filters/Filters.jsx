@@ -9,7 +9,7 @@ import {
 } from '@mantine/core';
 import { ReactComponent as CloseIcon } from '../../icons/close.svg';
 import { useSelector } from 'react-redux';
-import { useSearchParams, useLocation } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { fetchCategories } from '../../store/filterSlice';
 
