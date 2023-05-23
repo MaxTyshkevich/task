@@ -56,7 +56,8 @@ const vacanciesSlice = createSlice({
       state.isLoading = false;
       state.vacancies = action.payload.objects;
       state.isNextPage = action.payload.more;
-      state.countPages = Math.ceil(action.payload.total / 4);
+      state.countPages =
+        action.payload.total > 500 ? 125 : Math.ceil(action.payload.total / 4);
     },
     [fetchVacancies.rejected]: (state, action) => {
       state.isLoading = false;

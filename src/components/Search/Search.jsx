@@ -4,12 +4,19 @@ import { IconSearch } from '@tabler/icons-react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { changeSearch } from '../../store/filterSlice.js';
+import { useEffect } from 'react';
 
 export const Search = () => {
   let [searchParams, setSearchParams] = useSearchParams();
   const searchInput = searchParams.get('keyword');
   const dispatch = useDispatch();
   const { select } = useSelector((state) => state.filters);
+
+  useEffect(() => {
+    if (searchInput) {
+      dispatch(changeSearch(searchInput));
+    }
+  }, []);
 
   const HandleFind = () => {
     let objParams = {};

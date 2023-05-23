@@ -27,6 +27,7 @@ export const getToken = async () => {
 
 instance.interceptors.request.use(function (config) {
   const { accessToken } = store.getState().auth;
+
   if (accessToken) {
     config.headers.Authorization = `Bearer ${accessToken}`;
   }
@@ -46,7 +47,7 @@ export const getVacancies = async (search) => {
   }
 
   const res = await instance.get(path);
-  console.log({ res });
+
   return res.data;
 };
 

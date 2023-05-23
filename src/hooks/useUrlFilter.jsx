@@ -1,5 +1,5 @@
 import { useSearchParams, useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchVacancies } from '../store/VacancySlice';
 import { useSelector } from 'react-redux';
@@ -12,17 +12,18 @@ export const useUrlFilter = () => {
   let [searchParams, setSearchParams] = useSearchParams();
   let { search } = useLocation();
 
-  let page = +(searchParams.get('page') || 1);
+  const [page, setPage] = useState(() => +searchParams.get('page') + 1 || 1);
+  /* let page = +(searchParams.get('page') || 0); */
 
   const handlePagination = (currentPage) => {
     let objParams = {};
     for (const [key, value] of searchParams.entries()) {
       objParams[key] = value;
     }
-
+    setPage(currentPage);
     setSearchParams({
       ...objParams,
-      page: currentPage,
+      page: currentPage - 1,
     });
   };
 

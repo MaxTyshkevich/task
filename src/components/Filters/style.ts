@@ -21,16 +21,27 @@ export const useStyles = createStyles((theme) => ({
     '&:hover': {
       color: '#92C1FF',
       backgroundColor: 'transparent',
+      'svg, line': {
+        stroke: '#92C1FF',
+      },
     },
     '&:active': {
       color: '#5E96FC',
       backgroundColor: 'transparent',
+      'svg, line': {
+        stroke: '#5E96FC',
+      },
     },
   },
   select: {
     marginTop: '25px',
 
-    item: {},
+    '.mantine-Select-item': {
+      '&[data-selected]': {
+        background: '#5E96FC',
+        borderRadius: '8px',
+      },
+    },
   },
   groupNumberInput: {
     display: 'flex',

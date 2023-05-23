@@ -32,6 +32,15 @@ export const Theme: MantineThemeOverride = {
         },
       },
     },
+    /*  Select: {
+      defaultProps: {
+        rightSectionProps: {
+          sx: {
+            background: 'red',
+          },
+        },
+      },
+    }, */
 
     Button: {
       styles: {

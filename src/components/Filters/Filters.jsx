@@ -10,7 +10,7 @@ import {
 import { ReactComponent as CloseIcon } from '../../icons/close.svg';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { fetchCategories } from '../../store/filterSlice';
 
 import { useDispatch } from 'react-redux';
@@ -22,11 +22,12 @@ import {
   resetFilter,
 } from '../../store/filterSlice.js';
 import { ReactComponent as ArrayDown } from '../../icons/ArrayDown.svg';
+import { ReactComponent as ArrowUp } from '../../icons/ArrowUp.svg';
 
 export const Filters = () => {
   const { classes } = useStyles();
   let [searchParams, setSearchParams] = useSearchParams();
-
+  const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
   const { categories, maxSalary, minSalary, selectCategories } = useSelector(
     (state) => state.filters
@@ -68,6 +69,8 @@ export const Filters = () => {
         </Group>
         <Select
           data-elem="industry-select"
+          onDropdownOpen={() => setIsOpen(true)}
+          onDropdownClose={() => setIsOpen(false)}
           value={selectCategories}
           onChange={(value) => dispatch(changeSelect(value))}
           className={classes.select}
@@ -82,7 +85,7 @@ export const Filters = () => {
             value: category.key,
             label: category.title,
           }))}
-          rightSection={<ArrayDown size="1rem" />}
+          rightSection={isOpen ? <ArrowUp /> : <ArrayDown />}
         />
         <Group className={classes.groupNumberInput} mt={20} spacing={8}>
           <NumberInput

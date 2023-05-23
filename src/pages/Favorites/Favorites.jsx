@@ -1,5 +1,5 @@
 import { Container, Flex, Pagination } from '@mantine/core';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
@@ -18,7 +18,8 @@ export const Favorites = () => {
     (state) => state.vac
   );
   const [searchParams, setSearchParams] = useSearchParams();
-  let page = +(searchParams.get('page') || 1);
+  /* let page = +(searchParams.get('page') || 1); */
+  const [page, setPage] = useState(() => +searchParams.get('page') + 1 || 1);
 
   useEffect(() => {
     if (favoriteList.length) {
@@ -33,8 +34,9 @@ export const Favorites = () => {
   }, [dispatch, favoriteList, search]);
 
   const handlePagination = (currentPage) => {
+    setPage(currentPage);
     setSearchParams({
-      page: currentPage,
+      page: currentPage - 1,
     });
   };
 
