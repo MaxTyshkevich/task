@@ -27,11 +27,16 @@ export const JobSearch = () => {
           />
           <Pagination
             total={countPages}
-            siblings={2}
+            siblings={1}
+            boundaries={0}
             value={page}
-            sx={{ marginTop: 20 }}
+            sx={{ marginTop: 40 }}
             position="center"
             onChange={handlePagination}
+            styles={{
+              dots: { display: 'none' },
+            }}
+            spacing="sm"
           />
         </Flex>
       </Flex>
