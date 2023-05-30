@@ -1,9 +1,5 @@
 import { useEffect } from 'react';
-import {
-  addToFavorite,
-  delFromFavorite,
-  setFavoriteList,
-} from '../store/favoriteSlice';
+import { addToFavorite, delFromFavorite } from '../store/favoriteSlice';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 

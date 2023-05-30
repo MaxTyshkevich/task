@@ -4,7 +4,6 @@ import { ReactComponent as StarIcon } from '../../icons/Star.svg';
 import { ReactComponent as StarFavoriteIcon } from '../../icons/StarFavorite.svg';
 import { ReactComponent as LocationIcon } from '../../icons/LocationIcon.svg';
 import { ReactComponent as DotIcon } from '../../icons/dot.svg';
-import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useStyles } from './style';
 
