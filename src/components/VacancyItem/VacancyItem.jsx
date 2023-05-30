@@ -30,7 +30,6 @@ export const VacancyItem = ({
       data-elem={`vacancy-${item.id}`}
     >
       <ActionIcon
-        data-elem={`vacancy-${item.id}`}
         sx={{
           position: 'absolute',
           top: 25,
@@ -38,9 +37,15 @@ export const VacancyItem = ({
         }}
       >
         {isFavorite ? (
-          <StarFavoriteIcon onClick={() => delFromFavorite(item.id)} />
+          <StarFavoriteIcon
+            data-elem={`vacancy-${item.id}-shortlist-button`}
+            onClick={() => delFromFavorite(item.id)}
+          />
         ) : (
-          <StarIcon onClick={() => addToFavorite(item.id)} />
+          <StarIcon
+            data-elem={`vacancy-${item.id}-shortlist-button`}
+            onClick={() => addToFavorite(item.id)}
+          />
         )}
       </ActionIcon>
       <Title order={3}>
