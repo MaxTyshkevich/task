@@ -9,7 +9,7 @@ import { useStyles } from './style';
 
 export const JobVacancy = () => {
   let { vacancyId } = useParams();
-  const { vacancy } = useSelector((state) => state.vac);
+  const { vacancy } = useSelector((state) => state.vacancies);
 
   console.log(vacancyId);
   const dispatch = useDispatch();
