@@ -52,6 +52,13 @@ export const Filters = () => {
     });
   };
 
+  const handleReset = (event) => {
+    event.preventDefault();
+
+    dispatch(resetFilter());
+    setSearchParams({});
+  };
+
   return (
     <Paper className={classes.paper}>
       <form onSubmit={(event) => handleSumbit(event)}>
@@ -62,7 +69,7 @@ export const Filters = () => {
             variant="subtle"
             type="reset"
             rightIcon={<CloseIcon />}
-            onClick={() => dispatch(resetFilter())}
+            onClick={(event) => handleReset(event)}
           >
             Сбросить все
           </Button>

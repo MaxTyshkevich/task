@@ -1,4 +1,4 @@
-import { Box, Flex, Loader } from '@mantine/core';
+import { Box, Flex, LoadingOverlay } from '@mantine/core';
 import { VacancyItem } from '../VacancyItem/VacancyItem';
 
 const ListVacancies = ({
@@ -10,9 +10,9 @@ const ListVacancies = ({
 }) => {
   return (
     <Flex direction={'column'} sx={{ marginTop: '16px' }} gap={16}>
-      {isLoading && <Loader />}
-
-      {list ? (
+      {isLoading ? (
+        <LoadingOverlay visible={isLoading} overlayBlur={2} />
+      ) : !!list.length ? (
         list.map((item) => {
           const isFavorite = Boolean(favoriteList.find((el) => el === item.id));
           return (

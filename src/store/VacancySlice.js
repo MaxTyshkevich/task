@@ -1,18 +1,21 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import {
-  getVacancies,
-  getVacancy,
-  getFavoriteVacancies,
-} from '../api/index.js';
+import { getVacancies, getVacancy } from '../api/index.js';
 
 export const fetchVacancies = createAsyncThunk(
   'vacancies/fetchVacancies',
-  async function (search, { rejectWithValue }) {
+  async function (params, { rejectWithValue, dispatch }) {
     try {
-      const data = await getVacancies(search);
+      if (!params?.page) {
+        dispatch(setCurrentPage(1));
+      } else {
+        dispatch(setCurrentPage(params.page));
+      }
+
+      const data = await getVacancies(params);
 
       return data;
     } catch (error) {
+      console.log({ error });
       return rejectWithValue(error.message);
     }
   }
@@ -34,11 +37,9 @@ export const fetchVacancy = createAsyncThunk(
 const initialState = {
   vacancies: [],
   vacancy: null,
-  isNextPage: null,
   countPages: 0,
   currentPage: 1,
   categories: [],
-  favoriteList: [],
   isLoading: false,
   error: null,
 };
@@ -46,7 +47,11 @@ const initialState = {
 const vacanciesSlice = createSlice({
   name: 'vacancies',
   initialState,
-
+  reducers: {
+    setCurrentPage(state, action) {
+      state.currentPage = Number(action.payload);
+    },
+  },
   extraReducers: {
     [fetchVacancies.pending]: (state) => {
       state.isLoading = true;
@@ -55,7 +60,6 @@ const vacanciesSlice = createSlice({
     [fetchVacancies.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.vacancies = action.payload.objects;
-      state.isNextPage = action.payload.more;
       state.countPages =
         action.payload.total > 500 ? 125 : Math.ceil(action.payload.total / 4);
     },
@@ -82,5 +86,7 @@ const vacanciesSlice = createSlice({
     },
   },
 });
+
+export const { setCurrentPage } = vacanciesSlice.actions;
 
 export default vacanciesSlice.reducer;

@@ -1,61 +1,37 @@
 import { Container, Flex, Pagination } from '@mantine/core';
-import { useEffect, useState } from 'react';
-import { useSearchParams, useLocation, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { fetchVacancies } from '../../store/VacancySlice';
 import ListVacancies from '../../components/ListVacancies/ListVacancies';
 import { useUpdateLocalStorage } from '../../hooks/useUpdateLocalStorage';
+import { useLoadingFavorite } from '../../hooks/useLoadingFavorite';
 
 export const Favorites = () => {
-  const navigate = useNavigate();
-  let { search } = useLocation();
-  console.log({ search });
-  const dispatch = useDispatch();
-  const { favoriteList, addToFavorite, delFromFavorite } =
+  const { handleAddToFavorite, handleDelFromFavorite } =
     useUpdateLocalStorage();
-  const { vacancies, isLoading, countPages } = useSelector(
-    (state) => state.vac
-  );
-  const [searchParams, setSearchParams] = useSearchParams();
-  /* let page = +(searchParams.get('page') || 1); */
-  const [page, setPage] = useState(() => +searchParams.get('page') + 1 || 1);
 
-  useEffect(() => {
-    if (favoriteList.length) {
-      dispatch(
-        fetchVacancies(
-          `${search ? search : '?'}&ids=${JSON.stringify(favoriteList)}`
-        )
-      );
-    } else {
-      navigate('/emptystate');
-    }
-  }, [dispatch, favoriteList, search]);
-
-  const handlePagination = (currentPage) => {
-    setPage(currentPage);
-    setSearchParams({
-      page: currentPage - 1,
-    });
-  };
+  const {
+    favoriteVacancies,
+    currentPage,
+    countPages,
+    isLoading,
+    favoriteList,
+    handlePagination,
+  } = useLoadingFavorite();
 
   return (
     <Container sx={{ paddingTop: '40px' }} size="xl">
       <Flex sx={{ flexDirection: 'column', flexGrow: 1 }}>
         <ListVacancies
-          list={vacancies}
+          list={favoriteVacancies}
           isLoading={isLoading}
-          addToFavorite={addToFavorite}
-          delFromFavorite={delFromFavorite}
+          addToFavorite={handleAddToFavorite}
+          delFromFavorite={handleDelFromFavorite}
           favoriteList={favoriteList}
         />
         <Pagination
           total={countPages}
-          siblings={1}
+          siblings={3}
           boundaries={0}
-          value={page}
-          sx={{ marginTop: 40 }}
+          value={currentPage}
+          sx={{ marginTop: 40, marginBottom: 42 }}
           position="center"
           onChange={handlePagination}
           styles={{

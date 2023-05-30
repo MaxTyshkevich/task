@@ -1,35 +1,31 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import {
+  addToFavorite,
+  delFromFavorite,
+  setFavoriteList,
+} from '../store/favoriteSlice';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 export const useUpdateLocalStorage = () => {
-  const getListFromLocalStorage = () => {
-    let favoriteList = localStorage.getItem('favoriteList');
-    if (favoriteList) {
-      favoriteList = JSON.parse(favoriteList);
-    }
-    return favoriteList || [];
-  };
-
-  const [favoriteList, setFavoriteList] = useState(getListFromLocalStorage);
+  const { favoriteList } = useSelector((state) => state.favorite);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     localStorage.setItem('favoriteList', JSON.stringify(favoriteList));
-    /*  return () => {
-      localStorage.setItem('favoriteList', JSON.stringify(favoriteList));
-    }; */
   }, [favoriteList]);
 
-  const addToFavorite = (elemId) => {
-    setFavoriteList([...favoriteList, elemId]);
+  const handleAddToFavorite = (elemId) => {
+    dispatch(addToFavorite(elemId));
   };
 
-  const delFromFavorite = (elemId) => {
-    const updateList = favoriteList.filter((el) => el !== elemId);
-    setFavoriteList([...updateList]);
+  const handleDelFromFavorite = (elemId) => {
+    dispatch(delFromFavorite(elemId));
   };
 
   return {
-    addToFavorite,
-    delFromFavorite,
+    handleAddToFavorite,
+    handleDelFromFavorite,
     favoriteList,
   };
 };

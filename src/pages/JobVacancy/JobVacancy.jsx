@@ -2,7 +2,7 @@ import { TypographyStylesProvider, Container, Flex, Card } from '@mantine/core';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { fetchVacancy } from '../../store/VacancySlice';
+import { fetchVacancy } from '../../store/vacancySlice';
 import { VacancyItem } from '../../components/VacancyItem/VacancyItem';
 import { useParams } from 'react-router-dom';
 import { useStyles } from './style';

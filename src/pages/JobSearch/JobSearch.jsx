@@ -3,14 +3,14 @@ import { Search } from '../../components/Search/Search';
 import { Filters } from '../../components/Filters/Filters';
 import ListVacancies from '../../components/ListVacancies/ListVacancies';
 import { useUpdateLocalStorage } from '../../hooks/useUpdateLocalStorage';
-import { useUrlFilter } from '../../hooks/useUrlFilter';
+import { useLoadingVacancies } from '../../hooks/useLoadingVacancies';
 
 export const JobSearch = () => {
-  const { favoriteList, addToFavorite, delFromFavorite } =
+  const { favoriteList, handleAddToFavorite, handleDelFromFavorite } =
     useUpdateLocalStorage();
 
-  const { vacancies, isLoading, countPages, page, handlePagination } =
-    useUrlFilter();
+  const { vacancies, isLoading, countPages, currentPage, handlePagination } =
+    useLoadingVacancies();
 
   return (
     <Container sx={{ paddingTop: '40px' }} size="xl">
@@ -21,16 +21,16 @@ export const JobSearch = () => {
           <ListVacancies
             list={vacancies}
             isLoading={isLoading}
-            addToFavorite={addToFavorite}
-            delFromFavorite={delFromFavorite}
+            addToFavorite={handleAddToFavorite}
+            delFromFavorite={handleDelFromFavorite}
             favoriteList={favoriteList}
           />
           <Pagination
             total={countPages}
             siblings={1}
             boundaries={0}
-            value={page}
-            sx={{ marginTop: 40 }}
+            value={currentPage}
+            sx={{ marginTop: 40, marginBottom: 42 }}
             position="center"
             onChange={handlePagination}
             styles={{

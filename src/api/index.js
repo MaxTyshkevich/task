@@ -38,15 +38,20 @@ instance.interceptors.request.use(function (config) {
   return config;
 });
 
-export const getVacancies = async (search) => {
-  let path = `/2.0/vacancies`;
-  if (search) {
-    path += search + `&count=4&published=1`;
+export const getVacancies = async (params) => {
+  if (params?.page) {
+    params.page -= 1;
   } else {
-    path += `?count=4&published=1`;
+    params.page = 0;
   }
 
-  const res = await instance.get(path);
+  const res = await instance.get(`/2.0/vacancies`, {
+    params: {
+      count: 4,
+      published: 1,
+      ...params,
+    },
+  });
 
   return res.data;
 };
